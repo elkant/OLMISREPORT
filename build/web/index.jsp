@@ -285,6 +285,19 @@ function clearfields(){
     //document.getElementById("enddate").value="";
     
 }
+function togglecheckbox(){
+    if(document.getElementById("database").value!=""){
+        
+      document.getElementById("clusters").disabled = false;   
+    }
+    else {
+       document.getElementById("clusters").disabled = true;  
+        
+    }
+   
+    
+    
+}
 
 </script>
         
@@ -329,7 +342,7 @@ function clearfields(){
                 <table style="margin-left:230px ;" cellpadding="5px" cellspacing="5px">
                     
                    <tr><td> Pepfar Year:</td><td>
-                            <select title="" onchange="reporttype();" name="database" id="database" required>
+                            <select title="" onchange="reporttype();togglecheckbox();" name="database" id="database" required>
                              <option value="">Select Year</option>
                              <option value="2015">2015</option>
                              <option value="2014">2014</option>
@@ -354,7 +367,7 @@ function clearfields(){
                    <td style="text-align: left;">To:</td><td><input type="text" required readonly  name="enddate" id="enddate" /></td></tr>
                     <tr><td style="text-align: left;"><span id="listtype">CLUSTERS</span>:</td><td><select name="cbos" required id="cbos" > <option value="">select cluster</option></select></td>
                     
-                        <td><input type="checkbox" onclick="reporttype();" name="clusters" id="clusters"/></td><td><span>Use Cbos</span></td>
+                        <td><input type="checkbox" disabled="true" onclick="reporttype();" name="clusters" id="clusters"/></td><td><span>Use Cbos</span></td>
                     </tr>
                     
                     <tr><td colspan="2" style="text-align: center;">
