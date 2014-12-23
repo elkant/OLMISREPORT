@@ -19,12 +19,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>OLMIS WEB BASED REPORTS</title>
-       
-        
-        <!--BUTTON MAKER IMAGE-->
-        
 
-        
+
+        <!--BUTTON MAKER IMAGE-->
+
+
+
 
         <link rel="stylesheet" type="text/css" href="css/Main.css"/>
 
@@ -50,45 +50,45 @@
 
 
         <!-- Main CSS -->
-<!--        <link rel="stylesheet" href="css/sass-compiled.css" />-->
+        <!--        <link rel="stylesheet" href="css/sass-compiled.css" />-->
 
         <!-- Modrnizr Lib -->
         <script src="libs/modernizr.js" type="text/javascript"></script>
 
         <script type="text/javascript">
-            $(function() {
-                
-                
-       $("#cbos").html("<option value=\"\">loading clusters...</option>");         
-
-$.ajax({
-url:'Loadclusters?database=2014',
-type:'post',
-dataType:'html',
-success:function (data){
-
-       $("#cbos").html(data);
-
-}
+            $(function () {
 
 
-});                
+                $("#cbos").html("<option value=\"\">loading clusters...</option>");
 
-                $( document ).tooltip();
-                $( "#accordion" ).accordion();
-                $( "#tabs" ).tabs({
-                    show: function(event, ui) {
+                $.ajax({
+                    url: 'Loadclusters?database=2014',
+                    type: 'post',
+                    dataType: 'html',
+                    success: function (data) {
+
+                        $("#cbos").html(data);
+
+                    }
+
+
+                });
+
+                $(document).tooltip();
+                $("#accordion").accordion();
+                $("#tabs").tabs({
+                    show: function (event, ui) {
                         var $target = $(ui.panel);
                         $('.content:visible').effect(
-                        'explode', 
-                        {}, 
-                        500, 
-                        function(){
-                            $target.fadeIn();
-                        });
+                                'explode',
+                                {},
+                                500,
+                                function () {
+                                    $target.fadeIn();
+                                });
                     }
                 });
-            }); 
+            });
 
 
             //a function to dynamically add rows
@@ -97,92 +97,96 @@ success:function (data){
 //an ajax function to call the data
 
 
-function loadclusters(){
+            function loadclusters() {
 
-$("#cbos").html('loading..');
+                $("#cbos").html('loading..');
 
-        var db=document.getElementById("database").value;
-if(db==''){db='2014';}
-$.ajax({
-url:'Loadclusters?database='+db,
-type:'post',
-dataType:'html',
-success:function (data){
+                var db = document.getElementById("database").value;
+                if (db == '') {
+                    db = '2014';
+                }
+                $.ajax({
+                    url: 'Loadclusters?database=' + db,
+                    type: 'post',
+                    dataType: 'html',
+                    success: function (data) {
 
-       $("#cbos").html(data);
-       $("#listtype").html("CLUSTERS");
-}
-
-
-});     
-
-}
-
-function loadcbos1(){
-$("#cbos").html('loading..');
-var db=document.getElementById("database").value;
-if(db==''){db='2014';}
-$.ajax({
-url:'loadcbos?database='+db,
-type:'post',
-dataType:'html',
-success:function (data){
-
-       $("#listtype").html("CBOs");
-       $("#cbos").html(data);
-
-}
+                        $("#cbos").html(data);
+                        $("#listtype").html("CLUSTERS");
+                    }
 
 
-});     
+                });
+
+            }
+
+            function loadcbos1() {
+                $("#cbos").html('loading..');
+                var db = document.getElementById("database").value;
+                if (db == '') {
+                    db = '2014';
+                }
+                $.ajax({
+                    url: 'loadcbos?database=' + db,
+                    type: 'post',
+                    dataType: 'html',
+                    success: function (data) {
+
+                        $("#listtype").html("CBOs");
+                        $("#cbos").html(data);
+
+                    }
+
+
+                });
 
 
 
 
-}
-
- 
-function changeAction(){
-
-   var curaction=document.getElementById("report").value;
-
-        document.getElementById("login").action=curaction;
+            }
 
 
-}
+            function changeAction() {
+
+                var curaction = document.getElementById("report").value;
+
+                document.getElementById("login").action = curaction;
+
+
+            }
 
 
 
         </script>
         <script>
-            $(function() {
-	
+            $(function () {
 
-		
+
+
                 //		$( "#button" ).button();
-                $( "#radioset" ).buttonset();
-		
-            $( "#startdate" ).datepicker({changeMonth: true,changeYear: true,yearRange:'2008:2015', dateFormat: 'dd-M-yy'});
-            $( "#enddate" ).datepicker({changeMonth: true,changeYear: true,yearRange:'2008:2015',dateFormat: 'dd-M-yy'});
-            
+                $("#radioset").buttonset();
 
-		
+                $("#startdate").datepicker({changeMonth: true, changeYear: true, yearRange: '2008:2015', dateFormat: 'dd-M-yy'});
+                $("#enddate").datepicker({changeMonth: true, changeYear: true, yearRange: '2008:2015', dateFormat: 'dd-M-yy'});
+
+
+
             });
-            
-            
-            function getreport(){
-                
-                var startdate="";
-                var enddate="";
-                var cbos="";
-                
-                
-                startdate=document.getElementById("startdate").value;
-                enddate=document.getElementById("enddate").value;
-                cbos=document.getElementById("cbos").value;
-                
-                if(startdate!=""&&enddate!=""){
-                    document.getElementById("loading").innerHTML="<img src=\"images/ajax_loader.gif\" alt=\"loading\">";
+
+
+            function getreport() {
+
+                var startdate = "";
+                var enddate = "";
+                var cbos = "";
+
+
+                startdate = document.getElementById("startdate").value;
+                enddate = document.getElementById("enddate").value;
+                cbos = document.getElementById("cbos").value;
+
+                if (startdate != "" && enddate != "") {
+                    document.getElementById("loading").innerHTML = "<img src=\"images/ajax_loader.gif\" alt=\"loading\">";
 //                $.ajax({
 //                 url:"OLMISPEPFARSTOREDPROCEDURE?startdate="+startdate+"&enddate="+enddate+"&cbos="+cbos,   
 //                 type:'post',
@@ -195,112 +199,267 @@ function changeAction(){
 //                    
 //                });
 //                
-                
-                
-                
+
+
+
 // window.open("districtchooser?county="+dist.value);     
-var xmlhttp;    
+                    var xmlhttp;
 
-if (window.XMLHttpRequest)
-{// code for IE7+, Firefox, Chrome, Opera, Safari
-xmlhttp=new XMLHttpRequest();
-}
-else
-{// code for IE6, IE5
-xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-}
-xmlhttp.onreadystatechange=function()
-{
-if (xmlhttp.readyState==4 && xmlhttp.status==200)
-{
-document.location.href="OLMISPEPFARSTOREDPROCEDURE";
-}
-}
+                    if (window.XMLHttpRequest)
+                    {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    }
+                    else
+                    {// code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function ()
+                    {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                        {
+                            document.location.href = "OLMISPEPFARSTOREDPROCEDURE";
+                        }
+                    }
 
- var url="OLMISPEPFARSTOREDPROCEDURE?startdate="+startdate+"&enddate="+enddate+"&cbos="+cbos;
-xmlhttp.open("GET",url,true);
-xmlhttp.send();
-                
-                
-                
-  
-                
+                    var url = "OLMISPEPFARSTOREDPROCEDURE?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos;
+                    xmlhttp.open("GET", url, true);
+                    xmlhttp.send();
+
+
+
+
+
                 }
-                else{
-                alert("please choose dates range");
-                
+                else {
+                    alert("please choose dates range");
+
                 }
-                
+
+            }
+
+
+
+            function reporttype() {
+                if (document.getElementById("clusters").checked == true) {
+
+                    loadcbos1();
+
+
+                }
+                else {
+
+                    loadclusters();
+                }
+
+
+
+
+
+            }
+
+
+        </script>
+
+
+
+        <!--PEPFAR TIME-->
+
+        <script>
+            function startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                //document.getElementById('txt').innerHTML = h+":"+m+":"+s;
+                var t = setTimeout(function () {
+                    startTime()
+                }, 500);
+            }
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i
+                }
+                ;  // add zero in front of numbers < 10
+                return i;
+            }
+
+
+            function clearfields() {
+
+
+                //document.getElementById("startdate").value="";
+                //document.getElementById("enddate").value="";
+
+            }
+            function togglecheckbox() {
+                if (document.getElementById("database").value != "") {
+
+                    document.getElementById("clusters").disabled = false;
+                }
+                else {
+                    document.getElementById("clusters").disabled = true;
+
+                }
+
+
+
             }
             
+         function validatedate(){
+                
+                
+        var yr= document.getElementById("database").value;       
+          var stdate=document.getElementById("startdate").value; 
+          var edate=document.getElementById("enddate").value; 
+        //substring(0, 6) ==
+        if(stdate===""||stdate.substring(0,6)==="01-Oct"){
+            
+            document.getElementById("startdate").value="01-Oct-"+(yr-1);
+            
+         //var res = str.replace("Microsoft", "W3Schools");                                                  }
+            
+         
+        
+            }
+            
+    }
             
             
-            function reporttype(){
-            if( document.getElementById("clusters").checked==true ){
-              
-                loadcbos1();  
+       function comparedates(){
+          
+          var stdate=document.getElementById("startdate").value; 
+          var edate=document.getElementById("enddate").value; 
+          
+        
+              if(stdate!==""){
+            //now compare the dates
+//              stdate=new Date(stdate);
+//          edate=new Date(edate);
+           
+           if(stdate> edate){
                
-                
-            }
-            else {
-                
-                loadclusters(); 
-            }
+           
+               
+           document.getElementById('notice').innerHTML="<font color='red'> Start date ( "+stdate+" ) should not be greater than end date ( "+edate+" ). Please correct that to proceed !</font>";   
+             $("#notice").css("border-color","#FF0000");
+             $("#notice").css("background-color","#FFFFFF");
+             
+              $("#enddate").slideToggle("slow",function() {});
+           $("#enddate").slideToggle("slow",function() {});  
+            $("#enddate").css("border-color","#FF0000");  
+           
+                document.getElementById('startdate').value;  
+            return false;
+              }
+              else if(document.getElementById("startdate").value===''){
+                  
+                $("#startdate").css("border-color","#ff0000");   
+                  
+           $("#startdate").slideToggle("slow",function() {});
+           $("#startdate").slideToggle("slow",function() {});   
+           $("#startdate").focus();
+          return false; 
+              }
+              
+                 else if(document.getElementById("enddate").value===''){
+                  
+                  
+           $("#enddate").css("border-color","#ff0000");          
+           $("#enddate").slideToggle("slow",function() {});
+           $("#enddate").slideToggle("slow",function() {});   
+           $("#enddate").focus();
+          return false; 
+              }
+              
+              
+              else {
+                  $("#startdate").css("border-color","#E0E0D1");   
+                  $("#enddate").css("border-color","#E0E0D1");   
+                   document.getElementById('notice').innerHTML="<font color='green'> report between date "+stdate+" and date "+edate+". </font>";   
+           $("#notice").css("border-color","#00FF00");
+           $("#notice").css("background-color","#FFFFFF");
+                  return true;
+              }
             
-            
-            
-            
-            
-            }
-            
-            
+        }
+           
+       }     
+
         </script>
 
         
-        
-        <!--PEPFAR TIME-->
-        
         <script>
-function startTime() {
-    var today=new Date();
-    var h=today.getHours();
-    var m=today.getMinutes();
-    var s=today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    //document.getElementById('txt').innerHTML = h+":"+m+":"+s;
-    var t = setTimeout(function(){startTime()},500);
-}
-
-function checkTime(i) {
-    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
-    return i;
-}
-
-
-function clearfields(){
-    
-    
-    //document.getElementById("startdate").value="";
-    //document.getElementById("enddate").value="";
-    
-}
-function togglecheckbox(){
-    if(document.getElementById("database").value!=""){
+            
+        function displayduration(){
         
-      document.getElementById("clusters").disabled = false;   
+         var stdate=document.getElementById("startdate").value; 
+         var edate=document.getElementById("enddate").value;     
+        
+        var stdate1=stdate.replace(/-/g, ",");
+        var edate1=edate.replace(/-/g, ",");
+       
+        var monthsbetween=miezi( new Date(edate1), new Date(stdate1));
+        
+        $("#startdate").css("border-color","#E0E0D1");   
+        $("#enddate").css("border-color","#E0E0D1");  
+        var edatecopy=" _____________ ";
+        if(edate1!==""){
+        edatecopy=edate1;
     }
-    else {
-       document.getElementById("clusters").disabled = true;  
         
-    }
-   
+        document.getElementById('notice').innerHTML="<font color='green'> Report between date  </font><font color='orange'>"+stdate+"</font> <font color='green'>  and date </font> <font color='orange'>"+edatecopy+" </font>"; 
+       
+        //if both date are not blank, then show wahts the difference between the periods in monts 
+        if(stdate!==""&&edate!==""){
+        document.getElementById('notice').innerHTML="<font color='green'> Report between date  </font><font color='orange'>"+stdate+" </font> <font color='green'> and date </font> <font color='orange'> "+edate+".  </font> [ <b> "+monthsbetween+" </b>  months ]"; 
+            
+            
+        }
+        
+        $("#notice").css("border-color","#00FF00");
+        $("#notice").css("background-color","#FFFFFF");
+        
+        
+        }
+        
+        
+        function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+    // edit: increment months if d2 comes later in its month than d1 in its month
+    if (d2.getDate() >= d1.getDate())
+        months++;
+    // end edit
+    return months <= 0 ? 0 : months;
+                    }
     
+  
+   // miezi( Date('01 Oct,2014'),Date('14 Dec,2014'));                
+    function miezi(firstDate, secondDate) {
+        
+       
+        var fm = firstDate.getMonth();
+        var fy = firstDate.getFullYear();
+        var sm = secondDate.getMonth();
+        var sy = secondDate.getFullYear();
+        var months = Math.abs(((fy - sy) * 12) + fm - sm);
+        var firstBefore = firstDate > secondDate;
+        firstDate.setFullYear(sy);
+        firstDate.setMonth(sm);
+        firstBefore ? firstDate < secondDate ? months-- : "" : secondDate < firstDate ? months-- : "";
     
+        return months;
+       
 }
 
-</script>
+
         
+        </script>
 
     </head>
 
@@ -322,87 +481,85 @@ function togglecheckbox(){
 
             <%
 
-         
+
             %>                
 
 
             <!--            <form action="login" method="post" style="margin-left: 90px; margin-right: 10px;width:1080px;height:610px;background-color: #ffffff;">-->
-            <form name="login" id="login" method="post" action="PepfarSummary"  style="margin-left: 90px; margin-right: 10px;width:1080px;height:610px;background-color: #ffffff;">
+            <form name="login" id="login" method="post" action="PepfarSummary" onsubmit="return comparedates();"  style="margin-left: 50px; margin-right: 10px;width:1180px;height:610px;background-color: #ffffff;">
 
-                <section class="about" style="width:1077px;" > 
+                <section class="about" style="width:1177px;" > 
                     <h3 align="center"> <img src="images/aphia_logo.png" alt="logo" height="85px" width="270px"/></h3>
-                
-                <h3 style="text-align:center; background-color:orange;"> OLMIS REPORTS </h3>
+
+                    <h3 style="text-align:center; background-color:orange;"> OLMIS REPORTS </h3>
                 </section>             
                 <br/>
-                <h2 style="width: 600px; margin-left: 200px; font-family:cambria;color: #ff6600;text-align: center;"  >Select Start date, End date and Cluster/Cbo </h2>
-               
-                
-                
+                <h2 id="notice" style="background-color: yellowgreen;text-align: center;"> Select the appropriate parameters to generate a report </h2>
+                <h2 style="width: 600px; margin-left: 200px; font-family:cambria;color: #ff6600;text-align: center;"  > </h2>
+
+
+
                 <table style="margin-left:230px ;" cellpadding="5px" cellspacing="5px">
-                    
-                   <tr><td> Pepfar Year:</td><td>
-                            <select title="" onchange="reporttype();togglecheckbox();" name="database" id="database" required>
-                             <option value="">Select Year</option>
-                             <option value="2015">2015</option>
-                             <option value="2014">2014</option>
-                           
-                                
-                                
-                                
+
+                    <tr><td> Pepfar Year:</td><td>
+                            <select title="" onchange="reporttype();togglecheckbox();validatedate();displayduration();" name="database" id="database" required>
+                                <option value="">Select Year</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+
+
+
+
                             </select></td>  
-                   <td>Select report:</td>
-                   <td><select name="report" id="report" onchange="changeAction();">
-                           <option value="PepfarSummary">PEPFAR Summary</option>
-                           <option value="CHVReportingRatesSummary">*CHV Reporting Rates Summary </option>
-                           <option value="ConsolidatedReport">Consolidated Report </option>
-                           <option value="NeedsVsServed">*Needs Vs Served</option>
-                           <option value="ExitSummary">*Exit Summary </option>
-                           <option value="BenefitiaryList">*OVC Beneficiary List </option>
-                           <option value="RegistrationByCHVHH">OVC Registration List by CHV / by HH</option>
-                           <option value="RegistrationPerMonth">Registration Per Month </option>
-                       </select></td>
-                   </tr> 
-                   <tr><td style="text-align: left;">From Date :</td><td><input type="text" required readonly name="startdate" id="startdate" /></td>
-                   <td style="text-align: left;">To:</td><td><input type="text" required readonly  name="enddate" id="enddate" /></td></tr>
+                        <td>Select report:</td>
+                        <td><select name="report" id="report" onchange="changeAction();">
+                                <option value="PepfarSummary">PEPFAR Summary</option>
+                                <option value="CHVReportingRatesSummary">*CHV Reporting Rates Summary </option>
+                                <option value="ConsolidatedReport">Consolidated Report </option>
+                                <option value="NeedsVsServed">*Needs Vs Served</option>
+                                <option value="ExitSummary">*Exit Summary </option>
+                                <option value="BenefitiaryList">*OVC Beneficiary List </option>
+                                <option value="RegistrationByCHVHH">OVC Registration List by CHV / by HH</option>
+                                <option value="RegistrationPerMonth">Registration Per Month </option>
+                            </select></td>
+                    </tr> 
+                    <tr><td style="text-align: left;">From Date :</td><td><input type="text" required="true" onchange="displayduration();" readonly name="startdate" id="startdate" /></td>
+                        <td style="text-align: left;">To:</td><td><input type="text" required="true" onchange="displayduration();"  readonly  name="enddate" id="enddate" /></td></tr>
                     <tr><td style="text-align: left;"><span id="listtype">CLUSTERS</span>:</td><td><select name="cbos" required id="cbos" > <option value="">select cluster</option></select></td>
-                    
+
                         <td><input type="checkbox" disabled="true" onclick="reporttype();" name="clusters" id="clusters"/></td><td><span>Use Cbos</span></td>
                     </tr>
-                    
+
                     <tr><td colspan="2" style="text-align: center;">
                             <input type="submit" onmouseover="changeAction();" value="GENERATE" style="margin-left: 50px; height:50px ;width:140px;" name="generate" /> 
-                  
-<!--               <input type="text" value="Generate" id="generate" readonly style=" cursor:pointer;margin-left: 50px; text-transform:uppercase ; height: 30px; width:124px;text-align:center ; color:white ;background:coral; border-style:ridge ;" onclick=" getreport();"/>-->
-               </td></tr>
-                <tr><td><p id="loading"></p></td></tr>
-                </table>
-                
-                
-                
-                
-                <%
 
-                    if (session.getAttribute("login") != null) {%>
-                    
-                <script type="text/javascript"> 
+                            <!--               <input type="text" value="Generate" id="generate" readonly style=" cursor:pointer;margin-left: 50px; text-transform:uppercase ; height: 30px; width:124px;text-align:center ; color:white ;background:coral; border-style:ridge ;" onclick=" getreport();"/>-->
+                        </td></tr>
+                    <tr><td><p id="loading"></p></td></tr>
+                </table>
+
+
+
+
+                <%                    if (session.getAttribute("login") != null) {%>
+
+                <script type="text/javascript">
                     var n = noty({text: '<%=session.getAttribute("login")%>',
                         layout: 'center',
                         type: 'Success',
- 
                         timeout: 1800});
-                    
+
                 </script> <%
 
-        session.removeAttribute("login");
+                        session.removeAttribute("login");
                     }%>
 
-             
+
 
 
 
             </form>     
-           
+
 
 
 
