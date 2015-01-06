@@ -339,7 +339,11 @@
 //              stdate=new Date(stdate);
 //          edate=new Date(edate);
            
-           if(stdate> edate){
+           
+             var stdat=stdate.replace(/-/g, ",");
+        var edat=edate.replace(/-/g, ",");       
+                  
+           if( new Date(stdat)> new Date(edat)){
                
            
                
@@ -378,7 +382,7 @@
               else {
                   $("#startdate").css("border-color","#E0E0D1");   
                   $("#enddate").css("border-color","#E0E0D1");   
-                   document.getElementById('notice').innerHTML="<font color='green'> report between date "+stdate+" and date "+edate+". </font>";   
+            document.getElementById('notice').innerHTML="<font color='green'> report between date "+stdate+" and date "+edate+". </font>";   
            $("#notice").css("border-color","#00FF00");
            $("#notice").css("background-color","#FFFFFF");
                   return true;
@@ -394,14 +398,23 @@
         <script>
             
         function displayduration(){
-        
+       
          var stdate=document.getElementById("startdate").value; 
          var edate=document.getElementById("enddate").value;     
         
         var stdate1=stdate.replace(/-/g, ",");
         var edate1=edate.replace(/-/g, ",");
        
-        var monthsbetween=miezi( new Date(edate1), new Date(stdate1));
+        var monthsbetween=miezi
+        ( new Date(edate1), new Date(stdate1));
+        if(monthsbetween==1){ monthsbetween=monthsbetween+" month"}
+        if(monthsbetween>1){ monthsbetween=monthsbetween+" months"}
+        
+        if(monthsbetween==0){
+            
+            monthsbetween=days( new Date(stdate1) , new Date(edate1)) +" days";
+            
+        }
         
         $("#startdate").css("border-color","#E0E0D1");   
         $("#enddate").css("border-color","#E0E0D1");  
@@ -410,11 +423,19 @@
         edatecopy=edate1;
     }
         
-        document.getElementById('notice').innerHTML="<font color='green'> Report between date  </font><font color='orange'>"+stdate+"</font> <font color='green'>  and date </font> <font color='orange'>"+edatecopy+" </font>"; 
+        if(stdate===""&&edate===""){
        
+   document.getElementById('notice').innerHTML="<font color='green'> Select appropriate parameters to generate a report. </font>";   
+                
+        }
+        if(stdate!==""||edate!==""){
+        
+        document.getElementById('notice').innerHTML="<font color='green'> Report between date  </font><font color='orange'>"+stdate+"</font> <font color='green'>  and date </font> <font color='orange'>"+edatecopy+" </font>"; 
+        }
+        
         //if both date are not blank, then show wahts the difference between the periods in monts 
         if(stdate!==""&&edate!==""){
-        document.getElementById('notice').innerHTML="<font color='green'> Report between date  </font><font color='orange'>"+stdate+" </font> <font color='green'> and date </font> <font color='orange'> "+edate+".  </font> [ <b> "+monthsbetween+" </b>  months ]"; 
+        document.getElementById('notice').innerHTML="<font color='green'> Report between date  </font><font color='orange'>"+stdate+" </font> <font color='green'> and date </font> <font color='orange'> "+edate+".  </font> [ <b> "+monthsbetween+" </b>  ]"; 
             
             
         }
@@ -426,17 +447,7 @@
         }
         
         
-        function monthDiff(d1, d2) {
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth() + 1;
-    months += d2.getMonth();
-    // edit: increment months if d2 comes later in its month than d1 in its month
-    if (d2.getDate() >= d1.getDate())
-        months++;
-    // end edit
-    return months <= 0 ? 0 : months;
-                    }
+     
     
   
    // miezi( Date('01 Oct,2014'),Date('14 Dec,2014'));                
@@ -457,8 +468,15 @@
        
 }
 
-
+ 
         
+        
+        function days (d1, d2) {
+        var t2 = d2.getTime();
+        var t1 = d1.getTime();
+ 
+        return parseInt((t2-t1)/(24*3600*1000));
+    }
         </script>
 
     </head>
@@ -521,7 +539,8 @@
                                 <option value="BenefitiaryList">*OVC Beneficiary List </option>
                                 <option value="RegistrationByCHVHH">OVC Registration List by CHV / by HH</option>
                                 <option value="RegistrationPerMonth">Registration Per Month </option>
-                            </select></td>
+                            </select>
+                        </td>
                     </tr> 
                     <tr><td style="text-align: left;">From Date :</td><td><input type="text" required="true" onchange="displayduration();" readonly name="startdate" id="startdate" /></td>
                         <td style="text-align: left;">To:</td><td><input type="text" required="true" onchange="displayduration();"  readonly  name="enddate" id="enddate" /></td></tr>
@@ -531,7 +550,7 @@
                     </tr>
 
                     <tr><td colspan="2" style="text-align: center;">
-                            <input type="submit" onmouseover="changeAction();" value="GENERATE" style="margin-left: 50px; height:50px ;width:140px;" name="generate" /> 
+                            <input type="submit" onmouseover="changeAction();displayduration();" value="GENERATE" style="margin-left: 50px; height:50px ;width:140px;" name="generate" /> 
 
                             <!--               <input type="text" value="Generate" id="generate" readonly style=" cursor:pointer;margin-left: 50px; text-transform:uppercase ; height: 30px; width:124px;text-align:center ; color:white ;background:coral; border-style:ridge ;" onclick=" getreport();"/>-->
                         </td></tr>
@@ -576,7 +595,10 @@
                 </section>
             </div>
         </div>
-
+<script>
+    
+    displayduration();
+</script>
     </body>
 
 

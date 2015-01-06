@@ -112,7 +112,7 @@ allpath=perminpath;
 System.out.println("2 open of excel finished");
 
 //"OVCServed","MonthofService","YearofService","CBO","District","Gender","AgeBracket","CHWName","ActiveOVCs"
-
+//
    //String columnheaders[]={"OVCID","MonthofService","YearofService","CBO","District","Gender","AgeBracket","CHWName","ActiveOVCs"};
    String columnheaders[]={"OVCServed","MonthofService","YearofService","CBO","District","Gender","AgeBracket","CHWName","ActiveOVCs"};
              
@@ -336,7 +336,7 @@ System.out.println("2 open of excel finished");
             
             //CHW Name
             XSSFCell cell8 = rw2.createCell(7);
-            cell8.setCellValue(conn.rs.getInt(8));
+            cell8.setCellValue(conn.rs.getString(8));
           //  cell8.setCellStyle(innerdata_style);
             
             //Active OVCs
