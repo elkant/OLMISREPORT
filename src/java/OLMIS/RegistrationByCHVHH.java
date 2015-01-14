@@ -428,6 +428,7 @@ System.out.println("2 open of excel finished");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
         response.setHeader("Content-Disposition", "attachment; filename=ovcregistrationlistbychvbyHH__" + dat1 + "_.xlsm");
+        response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();

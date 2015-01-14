@@ -337,6 +337,7 @@ public class PEPFARREPORT extends HttpServlet {
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
         response.setHeader("Content-Disposition", "attachment; filename=PEPFAR_REPORT" + dat1 + ".xlsx");
+        response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();

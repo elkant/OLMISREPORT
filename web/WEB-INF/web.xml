@@ -82,6 +82,10 @@
         <servlet-name>RegistrationByCHVHH</servlet-name>
         <servlet-class>OLMIS.RegistrationByCHVHH</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>downloadreport</servlet-name>
+        <servlet-class>OLMIS.downloadreport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ADDYEARMONTH</servlet-name>
         <url-pattern>/ADDYEARMONTH</url-pattern>
@@ -161,6 +165,10 @@
     <servlet-mapping>
         <servlet-name>RegistrationByCHVHH</servlet-name>
         <url-pattern>/RegistrationByCHVHH</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>downloadreport</servlet-name>
+        <url-pattern>/downloadreport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>

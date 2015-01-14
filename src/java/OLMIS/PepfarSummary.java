@@ -24,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -392,12 +393,22 @@ String columnheaders[]={"OVCCount","Age","NumberofServices","Agebracket","Gender
         byte[] outArray = outByteStream.toByteArray();
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
+       
         response.setHeader("Expires:", "0"); // eliminates browser caching
         response.setHeader("Content-Disposition", "attachment; filename=PepfarSummary_" + dat1 + "_.xlsm");
+        response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();
         pkg.close();
+        
+        
+     
+            
+           
+        
+        System.out.println("PepfarSummary_" + dat1 + "_.xlsm");
+        
        // response.sendRedirect("index.jsp");
             
         } catch (InvalidFormatException ex) {

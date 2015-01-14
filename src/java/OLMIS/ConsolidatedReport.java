@@ -356,6 +356,7 @@ String columnheaders[]={"OVCCount","Gender","Agebracket","CBO","District","Count
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
         response.setHeader("Content-Disposition", "attachment; filename=Consolidated_Report_" + dat1 + "_.xlsm");
+         response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();

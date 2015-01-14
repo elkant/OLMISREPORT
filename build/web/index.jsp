@@ -38,6 +38,12 @@
         <!-- You can add more layouts if you want -->
 
         <script type="text/javascript" src="js/noty/themes/default.js"></script>
+        
+        
+        
+        
+        <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
+        
 
 
         <!--tooltip-->
@@ -61,18 +67,7 @@
 
                 $("#cbos").html("<option value=\"\">loading clusters...</option>");
 
-                $.ajax({
-                    url: 'Loadclusters?database=2014',
-                    type: 'post',
-                    dataType: 'html',
-                    success: function (data) {
-
-                        $("#cbos").html(data);
-
-                    }
-
-
-                });
+               reporttype();
 
                 $(document).tooltip();
                 $("#accordion").accordion();
@@ -184,6 +179,7 @@
                 startdate = document.getElementById("startdate").value;
                 enddate = document.getElementById("enddate").value;
                 cbos = document.getElementById("cbos").value;
+                //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
 
                 if (startdate != "" && enddate != "") {
                     document.getElementById("loading").innerHTML = "<img src=\"images/ajax_loader.gif\" alt=\"loading\">";
@@ -265,6 +261,9 @@
         <!--PEPFAR TIME-->
 
         <script>
+            
+            
+            
             function startTime() {
                 var today = new Date();
                 var h = today.getHours();
@@ -327,14 +326,16 @@
             
     }
             
+          
+            
             
        function comparedates(){
           
           var stdate=document.getElementById("startdate").value; 
           var edate=document.getElementById("enddate").value; 
-          
+          var cboz=document.getElementById("cbos").value;
         
-              if(stdate!==""){
+              if(stdate!==""&&edate!==""){
             //now compare the dates
 //              stdate=new Date(stdate);
 //          edate=new Date(edate);
@@ -385,17 +386,92 @@
             document.getElementById('notice').innerHTML="<font color='green'> report between date "+stdate+" and date "+edate+". </font>";   
            $("#notice").css("border-color","#00FF00");
            $("#notice").css("background-color","#FFFFFF");
+          
+           if(cboz==''){
+                document.getElementById('notice').innerHTML="<font color='red'> Please choose the cluster/cbo </font>";   
+                       
+                  
+           $("#clusters").css("border-color","#ff0000");          
+           $("#clusters").slideToggle("slow",function() {});
+           $("#clusters").slideToggle("slow",function() {});   
+           $("#clusters").focus();
+               return false;
+           }
+           else {
                   return true;
-              }
+                  
+                  
+                   }
             
         }
-           
+    }
+         else if(document.getElementById("enddate").value===''){
+             
+         
+       document.getElementById('notice').innerHTML="<font color='red'> Please choose the end date</font>";   
+                       
+                  
+           $("#enddate").css("border-color","#ff0000");          
+           $("#enddate").slideToggle("slow",function() {});
+           $("#enddate").slideToggle("slow",function() {});   
+           $("#enddate").focus();
+          return false; 
+              }
+              
+              else if(document.getElementById("startdate").value===''){
+             
+         
+       document.getElementById('notice').innerHTML="<font color='red'> Please choose the start date</font>";   
+                       
+                  
+           $("#startdate").css("border-color","#ff0000");          
+           $("#startdate").slideToggle("slow",function() {});
+           $("#startdate").slideToggle("slow",function() {});   
+           $("#startdate").focus();
+          return false; 
+          
+              }
+              
+        
+
+   else if(cboz===''){
+             
+         
+       document.getElementById('notice').innerHTML="<font color='red'> Please choose the cluster/cbo </font>";   
+                       
+                  
+           $("#cbos").css("border-color","#ff0000");          
+           $("#cbos").slideToggle("slow",function() {});
+           $("#cbos").slideToggle("slow",function() {});   
+           $("#cbos").focus();
+          return false; 
+          
+              }
+              else{
+               
+                  return true;
+                  
+                  
+              }
+
        }     
 
         </script>
 
         
         <script>
+            
+            function initializedownload(){
+                
+                
+                 if(comparedates()==true)
+                {
+                    
+                  downloadrpt();  
+                    
+                }
+            }
+            
             
         function displayduration(){
        
@@ -477,6 +553,60 @@
  
         return parseInt((t2-t1)/(24*3600*1000));
     }
+    
+    
+    //do a loading function 
+   function showprogress() {
+
+   
+
+    $('.loading').show();
+
+ var curaction1 = document.getElementById("report").value;
+ var startdate = document.getElementById("startdate").value;
+                var enddate = document.getElementById("enddate").value;
+                var cbos = document.getElementById("cbos").value;
+                //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
+                 var database=document.getElementById("database").value;
+                 var ur=curaction1+"?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos+"&database="+database;
+ 
+
+    $.ajax({
+        type: 'HEAD',
+        url: curaction1+"?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos+"&database="+database,
+        complete: function () {
+
+            $('.loading').hide();
+            document.location.assign(curaction1);
+//              var iframe = document.createElement("iframe");
+//  iframe.setAttribute("src",ur);
+//  iframe.setAttribute("style", "display: none");
+//  document.body.appendChild(iframe);
+            
+            
+//            var ifr = $('<iframe />').attr('src', curaction1).hide().appendTo("body")
+//            setTimeout(function () {ifr.remove();}, 5000);
+        }
+
+    });
+
+}
+    
+ function downloadrpt(){
+  $('.loading').show();
+  var curaction1 = document.getElementById("report").value;
+ var startdate = document.getElementById("startdate").value;
+                var enddate = document.getElementById("enddate").value;
+                var cbos = document.getElementById("cbos").value;
+                //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
+                 var database=document.getElementById("database").value;
+                 var ur=curaction1+"?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos+"&database="+database;
+ 
+ $.fileDownload(ur).done(function () { $('.loading').hide();}).fail(function () { alert('File download failed!'); });
+ 
+  //$('.loading').hide();
+ }
+    
         </script>
 
     </head>
@@ -504,7 +634,7 @@
 
 
             <!--            <form action="login" method="post" style="margin-left: 90px; margin-right: 10px;width:1080px;height:610px;background-color: #ffffff;">-->
-            <form name="login" id="login" method="post" action="PepfarSummary" onsubmit="return comparedates();"  style="margin-left: 50px; margin-right: 10px;width:1180px;height:610px;background-color: #ffffff;">
+            <form name="login" id="login" method="post" action="PepfarSummary" onsubmit=""  style="margin-left: 50px; margin-right: 10px;width:1180px;height:610px;background-color: #ffffff;">
 
                 <section class="about" style="width:1177px;" > 
                     <h3 align="center"> <img src="images/aphia_logo.png" alt="logo" height="85px" width="270px"/></h3>
@@ -512,6 +642,9 @@
                     <h3 style="text-align:center; background-color:orange;"> OLMIS REPORTS </h3>
                 </section>             
                 <br/>
+                <img src='image/ajax_loader.gif' alt='loading' style="display:none; margin-left:500px ;" class='loading'/>
+                
+                
                 <h2 id="notice" style="background-color: yellowgreen;text-align: center;"> Select the appropriate parameters to generate a report </h2>
                 <h2 style="width: 600px; margin-left: 200px; font-family:cambria;color: #ff6600;text-align: center;"  > </h2>
 
@@ -532,7 +665,7 @@
                         <td>Select report:</td>
                         <td><select name="report" id="report" onchange="changeAction();">
                                 <option value="PepfarSummary">PEPFAR Summary</option>
-                                <option value="CHVReportingRatesSummary">*CHV Reporting Rates Summary </option>
+                                <option value="CHVReportingRatesSummary">CHV Reporting Rates Summary </option>
                                 <option value="ConsolidatedReport">Consolidated Report </option>
                                 <option value="NeedsVsServed">*Needs Vs Served</option>
                                 <option value="ExitSummary">*Exit Summary </option>
@@ -546,15 +679,16 @@
                         <td style="text-align: left;">To:</td><td><input type="text" required="true" onchange="displayduration();"  readonly  name="enddate" id="enddate" /></td></tr>
                     <tr><td style="text-align: left;"><span id="listtype">CLUSTERS</span>:</td><td><select name="cbos" required id="cbos" > <option value="">select cluster</option></select></td>
 
-                        <td><input type="checkbox" disabled="true" onclick="reporttype();" name="clusters" id="clusters"/></td><td><span>Use Cbos</span></td>
+                        <td><input type="checkbox" disabled="true" onclick="reporttype();" name="clusters" id="clusters"/></td><td><span>Use Cbos <i> (instead of Clusters)</i></span></td>
                     </tr>
 
                     <tr><td colspan="2" style="text-align: center;">
-                            <input type="submit" onmouseover="changeAction();displayduration();" value="GENERATE" style="margin-left: 50px; height:50px ;width:140px;" name="generate" /> 
+                            
+<!--                            <input type="submit" onmouseover="changeAction();displayduration();" value="GENERATE" style="margin-left: 50px; height:50px ;width:140px;" name="generate" /> -->
 
-                            <!--               <input type="text" value="Generate" id="generate" readonly style=" cursor:pointer;margin-left: 50px; text-transform:uppercase ; height: 30px; width:124px;text-align:center ; color:white ;background:coral; border-style:ridge ;" onclick=" getreport();"/>-->
+                            <input type="text" value="Generate" id="generate1" class ='generate1' onmouseover="changeAction();displayduration();" onclick="initializedownload();" readonly style=" cursor:pointer;margin-left: 50px; text-transform:uppercase ; height: 50px; width:140px;text-align:center ; color:white ;background:coral; border-style:ridge ;" />
                         </td></tr>
-                    <tr><td><p id="loading"></p></td></tr>
+                    <tr><td></td></tr>
                 </table>
 
 
@@ -598,6 +732,8 @@
 <script>
     
     displayduration();
+      
+//            
 </script>
     </body>
 
