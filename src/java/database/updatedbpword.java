@@ -75,6 +75,7 @@ public class updatedbpword extends HttpServlet {
       dbconnpath=mydrive+":\\OLMIS\\OLMIS\\DBCONNECTION\\DO_NOT_DELETE\\_\\_\\."; 
       
       String templatepath=mydrive+":\\OLMIS\\TEMPLATES";
+      String templatepath1=mydrive+":\\OLMIS\\OLMIS\\MACROS";
       
        String excelpath = getServletContext().getRealPath("/PepfarSummary.xlsm");
        
@@ -89,6 +90,7 @@ public class updatedbpword extends HttpServlet {
        
        
             new File(templatepath).mkdirs();
+            new File(templatepath1).mkdirs();
             new File(dbconnpath).mkdirs();
             
             //copy the excel file macro

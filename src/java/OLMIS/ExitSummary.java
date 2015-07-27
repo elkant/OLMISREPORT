@@ -22,7 +22,12 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -45,7 +50,7 @@ public class ExitSummary extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        XSSFWorkbook wb=null;
+        XSSFWorkbook wb1=null;
         
         try {
            
@@ -103,7 +108,8 @@ allpath=perminpath;
      
       OPCPackage pkg = OPCPackage.open(allpathfile);
   System.out.println("1 open of excel finished");
-    wb = new XSSFWorkbook(pkg);
+    wb1 = new XSSFWorkbook(pkg);
+      SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 100);
 System.out.println("2 open of excel finished");
 
 //Clientdetails.OVCID","Clientdetails.[Exited]","Clientdetails.DateofExit","MonthofExit","YearofExit","HidingReason.HidingReason","CBO.CBO","District.District","Clientdetails.Gender
@@ -111,11 +117,11 @@ System.out.println("2 open of excel finished");
    String columnheaders[]={"Clientdetails.OVCID","Clientdetails.[Exited]","Clientdetails.DateofExit","MonthofExit","YearofExit","HidingReason.HidingReason","CBO.CBO","District.District","Clientdetails.Gender"};
              
   System.out.println("3 open of excel finished");  
-    XSSFSheet rawdata = wb.getSheet("Sheet1");
+   Sheet rawdata = wb.getSheet("Sheet1");
 
 
             //%%%%%%%%%%%%%%%%HEADER FONTS AND COLORATION%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            XSSFFont font_header = wb.createFont();
+            Font font_header = wb.createFont();
             font_header.setFontHeightInPoints((short) 9);
             font_header.setFontName("Arial Black");
 
@@ -126,7 +132,7 @@ System.out.println("2 open of excel finished");
             font_header.setColor(HSSFColor.BLACK.index);
 
             //font data
-            XSSFFont datafont = wb.createFont();
+            Font datafont = wb.createFont();
             datafont.setBoldweight((short) 03);
           
             datafont.setFontHeightInPoints((short) 10);
@@ -254,9 +260,9 @@ System.out.println("2 open of excel finished");
             
            
             
-              XSSFRow allsitescolumnheader = rawdata.createRow(0);
+              Row allsitescolumnheader = rawdata.createRow(0);
                 allsitescolumnheader.setHeightInPoints(30);
-                XSSFCell rwcolheader=null;
+                Cell rwcolheader=null;
                 
               maxmerging=columnheaders.length;
                 
@@ -269,7 +275,7 @@ System.out.println("2 open of excel finished");
                 }
             
             
-              XSSFRow rw2 = null;
+              Row rw2 = null;
 
            
 
@@ -289,12 +295,12 @@ System.out.println("2 open of excel finished");
             rw2.setHeightInPoints(25);
             
             //OVCID
-            XSSFCell cell1 = rw2.createCell(0);
+            Cell cell1 = rw2.createCell(0);
             cell1.setCellValue(conn.rs.getString(1));
             //cell1.setCellStyle(innerdata_style);
             
             //Exited
-            XSSFCell cell2 = rw2.createCell(1);
+            Cell cell2 = rw2.createCell(1);
             cell2.setCellValue(conn.rs.getInt(2));
            // cell2.setCellStyle(innerdata_style);
              //Clientdetails.OVCID","Clientdetails.[Exited]","Clientdetails.DateofExit","MonthofExit",
@@ -302,17 +308,17 @@ System.out.println("2 open of excel finished");
  
             
             //Date of Exit
-             XSSFCell cell3 = rw2.createCell(2);
+             Cell cell3 = rw2.createCell(2);
             cell3.setCellValue(conn.rs.getString(3));
            // cell3.setCellStyle(innerdata_style);
             
             //month of exit
-             XSSFCell cell4 = rw2.createCell(3);
+            Cell cell4 = rw2.createCell(3);
             cell4.setCellValue(conn.rs.getString(4));
            // cell4.setCellStyle(innerdata_style);
             
            //Year of exit
-             XSSFCell cell5 = rw2.createCell(4);
+            Cell cell5 = rw2.createCell(4);
             cell5.setCellValue(conn.rs.getString(5));
             //cell5.setCellStyle(innerdata_style);
            
@@ -321,23 +327,23 @@ System.out.println("2 open of excel finished");
  
             
             //Hiding reason
-            XSSFCell cell6 = rw2.createCell(5);
+            Cell cell6 = rw2.createCell(5);
             cell6.setCellValue(conn.rs.getString(6));
            // cell6.setCellStyle(innerdata_style);
             
             //CBO
-            XSSFCell cell7 = rw2.createCell(6);
+            Cell cell7 = rw2.createCell(6);
             cell7.setCellValue(conn.rs.getString(7));
           //  cell7.setCellStyle(innerdata_style);
             
             //District
-            XSSFCell cell8 = rw2.createCell(7);
+           Cell cell8 = rw2.createCell(7);
             cell8.setCellValue(conn.rs.getInt(8));
           //  cell8.setCellStyle(innerdata_style);
           
             
             //Client details
-            XSSFCell cell9 = rw2.createCell(8);
+            Cell cell9 = rw2.createCell(8);
             cell9.setCellValue(conn.rs.getInt(9));
            // cell9.setCellStyle(innerdata_style);
            
@@ -364,6 +370,7 @@ System.out.println("2 open of excel finished");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
         response.setHeader("Content-Disposition","attachment; filename=EXIT_SUMMARY" + dat1 + "_.xlsm");
+        response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();

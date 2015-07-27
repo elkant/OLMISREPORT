@@ -28,8 +28,13 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -52,7 +57,7 @@ public class ConsolidatedReport extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        XSSFWorkbook wb=null;
+        XSSFWorkbook wb1=null;
         
         try {
            
@@ -63,8 +68,8 @@ public class ConsolidatedReport extends HttpServlet {
 
     String mydrive = allpath.substring(0, 1);
         //dbconnpath=mydrive+":\\MNHC_SYSTEM_APHIA_PLUS\\"; 
-      allpath=mydrive+":\\APHIAPLUS\\OLMIS\\MACROS\\ConsolidatedReportSummary.xlsm"; 
-    String  np=mydrive+":\\APHIAPLUS\\OLMIS\\MACROS\\ConsolidatedReportSummary.xlsm"; 
+      allpath=mydrive+":\\OLMIS\\OLMIS\\MACROS\\ConsolidatedReportSummary.xlsm"; 
+    String  np=mydrive+":\\OLMIS\\OLMIS\\MACROS\\ConsolidatedReportSummary.xlsm"; 
     
     
    
@@ -73,7 +78,7 @@ Date dat = new Date();
 String dat1 = dat.toString().replace(" ", "_");
  dat1 = dat1.toString().replace(":", "_");
 
-   String perminpath=mydrive+":\\APHIAPLUS\\OLMIS\\MACROS\\ConsolidatedReportSummary"+dat1+".xlsm";  
+   String perminpath=mydrive+":\\OLMIS\\OLMIS\\MACROS\\ConsolidatedReportSummary"+dat1+".xlsm";  
  
 copytemplates ct= new copytemplates();
 File f = new File(np);
@@ -107,7 +112,9 @@ allpath=perminpath;
      
       OPCPackage pkg = OPCPackage.open(allpathfile);
   System.out.println("1 open of excel finished");
-    wb = new XSSFWorkbook(pkg);
+    wb1 = new XSSFWorkbook(pkg);
+    
+    SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 100);
 System.out.println("2 open of excel finished");
  
 //"OVCCount","Domain","Gender","CBO","District","County","NeedsorServices"
@@ -117,11 +124,11 @@ String columnheaders[]={"OVCCount","Gender","Agebracket","CBO","District","Count
     
 //"Clientdetails.OVCID","Clientdetails.FirstName","Clientdetails.MiddleName","Clientdetails.Surname","Clientdetails.Gender","DateofBirth","age","BirthCert","HIVStatus.HIVStatus","CHWFirstName","CHWMiddleName","CHWSurname","CHWNationalID","ParentNationalIDNumber","ParentDetailsFirstName","ParentDetailsMiddleName","ParentDetailsSurname","SchoolLevel.SchoolLevel","Schools.SchoolName","DateofRegistration","ExitStatus","ReasonforExit","DateofExit","Immunization.ImmunizationStatus","Clientdetails.HHVulnerabilityStatus","CBO.CBO","District.District","Location.Location","County.County"           
   System.out.println("3 open of excel finished");  
-    XSSFSheet rawdata = wb.getSheet("Sheet1");
+   Sheet rawdata = wb.getSheet("Sheet1");
 
 
             //%%%%%%%%%%%%%%%%HEADER FONTS AND COLORATION%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            XSSFFont font_header = wb.createFont();
+            Font font_header = wb.createFont();
             font_header.setFontHeightInPoints((short) 9);
             font_header.setFontName("Arial Black");
 
@@ -132,7 +139,7 @@ String columnheaders[]={"OVCCount","Gender","Agebracket","CBO","District","Count
             font_header.setColor(HSSFColor.BLACK.index);
 
             //font data
-            XSSFFont datafont = wb.createFont();
+            Font datafont = wb.createFont();
             datafont.setBoldweight((short) 03);
           
             datafont.setFontHeightInPoints((short) 10);
@@ -260,9 +267,9 @@ String columnheaders[]={"OVCCount","Gender","Agebracket","CBO","District","Count
             
            
             
-              XSSFRow allsitescolumnheader = rawdata.createRow(0);
+              Row allsitescolumnheader = rawdata.createRow(0);
                 allsitescolumnheader.setHeightInPoints(30);
-                XSSFCell rwcolheader=null;
+                Cell rwcolheader=null;
                 
               maxmerging=columnheaders.length;
                 
@@ -275,7 +282,7 @@ String columnheaders[]={"OVCCount","Gender","Agebracket","CBO","District","Count
                 }
             
             
-              XSSFRow rw2 = null;
+              Row rw2 = null;
 
            
 
@@ -297,38 +304,38 @@ String columnheaders[]={"OVCCount","Gender","Agebracket","CBO","District","Count
             rw2.setHeightInPoints(25);
             
             //OVCcount
-            XSSFCell cell1 = rw2.createCell(0);
+            Cell cell1 = rw2.createCell(0);
             cell1.setCellValue(conn.rs.getInt(1));
             //cell1.setCellStyle(innerdata_style);
             
             //AGE
-            XSSFCell cell2 = rw2.createCell(1);
+            Cell cell2 = rw2.createCell(1);
             cell2.setCellValue(conn.rs.getString(2));
            // cell2.setCellStyle(innerdata_style);
             
             
             //Number of services
-             XSSFCell cell3 = rw2.createCell(2);
+            Cell cell3 = rw2.createCell(2);
             cell3.setCellValue(conn.rs.getString(3));
            // cell3.setCellStyle(innerdata_style);
             
             //Age bracket
-             XSSFCell cell4 = rw2.createCell(3);
+            Cell cell4 = rw2.createCell(3);
             cell4.setCellValue(conn.rs.getString(4));
            // cell4.setCellStyle(innerdata_style);
             
             //Gender
-             XSSFCell cell5 = rw2.createCell(4);
+            Cell cell5 = rw2.createCell(4);
             cell5.setCellValue(conn.rs.getString(5));
             //cell5.setCellStyle(innerdata_style);
             
             //cbo
-            XSSFCell cell6 = rw2.createCell(5);
+           Cell cell6 = rw2.createCell(5);
             cell6.setCellValue(conn.rs.getString(6));
            // cell6.setCellStyle(innerdata_style);
             
             //District
-            XSSFCell cell7 = rw2.createCell(6);
+            Cell cell7 = rw2.createCell(6);
             cell7.setCellValue(conn.rs.getString(7));
           //  cell7.setCellStyle(innerdata_style);
             
@@ -355,7 +362,8 @@ String columnheaders[]={"OVCCount","Gender","Agebracket","CBO","District","Count
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=Consolidated_Report_" + dat1 + "_.xlsm");
+        response.setHeader("Content-Disposition", "attachment; filename=ConsolidatedReport_Btwn_"+startdate.replace(" ","")+"_and_"+enddate.replace(" ","")+"_Generated_On_" + dat1 + "_.xlsm");
+        response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();
