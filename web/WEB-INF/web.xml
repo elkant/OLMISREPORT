@@ -82,6 +82,14 @@
         <servlet-name>RegistrationByCHVHH</servlet-name>
         <servlet-class>OLMIS.RegistrationByCHVHH</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>mergerceaschools</servlet-name>
+        <servlet-class>mergerceadata.mergerceaschools</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>wardsAlignment</servlet-name>
+        <servlet-class>SCRIPTS.wardsAlignment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ADDYEARMONTH</servlet-name>
         <url-pattern>/ADDYEARMONTH</url-pattern>
@@ -161,6 +169,14 @@
     <servlet-mapping>
         <servlet-name>RegistrationByCHVHH</servlet-name>
         <url-pattern>/RegistrationByCHVHH</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>mergerceaschools</servlet-name>
+        <url-pattern>/mergerceaschools</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>wardsAlignment</servlet-name>
+        <url-pattern>/wardsAlignment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>
