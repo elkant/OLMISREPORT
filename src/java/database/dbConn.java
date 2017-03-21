@@ -42,7 +42,7 @@ public final class dbConn {
     public dbConn( String db) {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-            // Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mhc","root", "");
+      
              connect = null;
 
 
@@ -67,7 +67,6 @@ public final class dbConn {
                 
                 
                 if (dbsetup[0] != null) {
-//connect = DriverManager.getConnection("jdbc:sqlserver://nkudat01:1433;databaseName=APHIAMAINDB_2014_NEWTOOLS;user=sa;password=Fhiimpact!;");
                     if(dbsetup[3]==null){connect = DriverManager.getConnection("jdbc:sqlserver://" + dbsetup[0] + ";databaseName=" + dbsetup[1]+";user="+dbsetup[2]+";password=");
 }
                     else{
